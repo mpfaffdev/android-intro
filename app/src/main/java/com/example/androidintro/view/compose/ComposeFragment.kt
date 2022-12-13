@@ -47,6 +47,9 @@ class ComposeFragment : Fragment() {
                         ComposeUiState.Initial -> {
                             // no-op
                         }
+                        is ComposeUiState.ShowComposers -> {
+                            // no-op
+                        }
                         ComposeUiState.ShowLegacyViewFragment -> showLegacyViewFragment()
                     }
                 }

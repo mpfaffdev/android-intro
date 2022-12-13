@@ -12,6 +12,11 @@ class ComposeViewModel : ViewModel() {
 
     private val getClassicalComposersUseCase = GetClassicalComposersUseCase()
 
+    init {
+        val composers = getClassicalComposersUseCase()
+        _uiState.value = ComposeUiState.ShowComposers(composers)
+    }
+
     fun showLegacyViewFragment() {
         _uiState.value = ComposeUiState.ShowLegacyViewFragment
     }

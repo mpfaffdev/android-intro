@@ -6,4 +6,6 @@ sealed interface ComposeUiState {
 
     object ShowLegacyViewFragment : ComposeUiState
 
+    data class ShowComposers(val info: List<String>): ComposeUiState
+
 }
