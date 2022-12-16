@@ -1,0 +1,35 @@
+Android live-coding user stories:
+
+Branch: feature/classical-composers
+
+User story 1:
+As a pianist, I want to have a list of classical composers and their birthdays, so I can get an overview while choosing a new song to learn.
+Acceptance criteria:
+- A simple list with all composers is shown
+- The list is scrollable
+- The list is implemented using best practices for building well performing lists on Android
+
+In-between question:
+The Clean Architecture is broken in the `GetClassicalComposersUseCase`. 
+What's wrong and how could it be fixed?
+
+User story 2:
+As a pianist, I want to have the birthdays of the composers in a smaller, colored text, so the list is cleaner and easier to read.
+Acceptance criteria:
+- The composer's names are displayed in normal text size and color
+- The composer's birthdays are displayed beneath their names in smaller text
+- The names have black color
+- The birthdays have blue color
+
+User story 3:
+As a pianist, I want an option to filter the list of classical composers by entering a search query, so I can find interesting composers faster.
+
+Acceptance criteria:
+- A text-input field is shown
+- Users can enter a search text
+- The list shows only entries of composers whose names contain the entered string (in any position!)
+- The list updates while the user types the search query
+- An empty search query means all composers are shown
+
+Nice to have functionality:
+- The search is debounced (delayed) by 1 second, to make the list jump less while typing
