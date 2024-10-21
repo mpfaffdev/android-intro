@@ -26,9 +26,15 @@ fun ComposeScreen(viewModel: ComposeViewModel) {
     var currentSearchQuery by remember { mutableStateOf("") }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Text("ComposeFragment")
         Spacer(modifier = Modifier.height(8.dp))
+        if (uiState !is ComposeUiState.ShowLegacyViewFragment) {
+            Button(onClick = { viewModel.showLegacyViewFragment() }) {
+                Text("Go to LegacyViewFragment")
+            }
+        }
+        Spacer(modifier = Modifier.height(24.dp))
         TextField(
             value = currentSearchQuery,
             onValueChange = {
@@ -37,12 +43,6 @@ fun ComposeScreen(viewModel: ComposeViewModel) {
             },
             label = { Text("Composer Search") }
         )
-        Spacer(modifier = Modifier.height(24.dp))
-        if (uiState !is ComposeUiState.ShowLegacyViewFragment) {
-            Button(onClick = { viewModel.showLegacyViewFragment() }) {
-                Text("Go to LegacyViewFragment")
-            }
-        }
         Spacer(modifier = Modifier.height(8.dp))
         when (val state = uiState) {
             is ComposeUiState.ShowComposers -> {
@@ -52,6 +52,7 @@ fun ComposeScreen(viewModel: ComposeViewModel) {
                     }
                 }
             }
+
             else -> {
                 // no-op
             }
