@@ -1,9 +1,11 @@
 package com.example.androidintro.view.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
@@ -17,7 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun ComposeScreen(viewModel: ComposeViewModel) {
@@ -46,9 +51,15 @@ fun ComposeScreen(viewModel: ComposeViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
         when (val state = uiState) {
             is ComposeUiState.ShowComposers -> {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
                     items(state.info) { item ->
-                        Text(item)
+                        ComposerItem(
+                            name = item.name,
+                            birthDate = item.birthDate
+                        )
                     }
                 }
             }
@@ -56,6 +67,29 @@ fun ComposeScreen(viewModel: ComposeViewModel) {
             else -> {
                 // no-op
             }
+        }
+    }
+}
+
+@Composable
+fun ComposerItem(
+    modifier: Modifier = Modifier,
+    name: String,
+    birthDate: String?
+) {
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = name,
+            fontSize = 18.sp
+        )
+        birthDate?.let {
+            Text(
+                text = it,
+                color = Color.Blue,
+                fontSize = 12.sp
+            )
         }
     }
 }

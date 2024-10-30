@@ -32,7 +32,7 @@ class ComposeViewModel : ViewModel() {
         searchJob = viewModelScope.launch(Dispatchers.Default) {
             delay(1000L)
             if (uiState.value !is ComposeUiState.ShowComposers) return@launch
-            val filteredComposers = composers.filter { it.contains(query) }
+            val filteredComposers = composers.filter { it.name == query }
             _uiState.value = ComposeUiState.ShowComposers(filteredComposers)
         }
     }
