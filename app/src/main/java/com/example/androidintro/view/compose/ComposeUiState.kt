@@ -8,6 +8,8 @@ sealed interface ComposeUiState {
 
     object ShowLegacyViewFragment : ComposeUiState
 
-    data class ShowComposers(val info: List<Composer>): ComposeUiState
+    data class ShowComposers(
+        val info: List<Composer>
+    ): ComposeUiState
 
 }
