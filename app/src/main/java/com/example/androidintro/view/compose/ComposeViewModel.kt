@@ -2,6 +2,7 @@ package com.example.androidintro.view.compose
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidintro.domain.Composer
 import com.example.androidintro.domain.GetClassicalComposersUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -58,6 +59,21 @@ class ComposeViewModel(
 
     fun showLegacyViewFragment() {
         _uiState.value = ComposeUiState.ShowLegacyViewFragment
+    }
+
+    fun toggleFavorite(composer: Composer) {
+        viewModelScope.launch {
+            _uiState.update {
+                if (it is ComposeUiState.ShowComposers) {
+                    val updatedInfo = it.info.map {
+                        if (it.uuid == composer.uuid) it.copy(favorite = !it.favorite)  else  it
+                    }
+                    it.copy(info = updatedInfo)
+                } else {
+                    it
+                }
+            }
+        }
     }
 
     fun onSearchTextEntered(query: String) {

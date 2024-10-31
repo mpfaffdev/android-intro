@@ -2,6 +2,7 @@ package com.example.androidintro.domain
 
 import com.example.androidintro.data.ClassicalComposers
 import kotlinx.coroutines.flow.flow
+import java.util.UUID
 
 class GetClassicalComposersUseCase {
 
@@ -20,6 +21,8 @@ class GetClassicalComposersUseCase {
 }
 
 data class Composer(
+    val uuid: String = UUID.randomUUID().toString(),
+    val favorite: Boolean = false,
     val name: String,
-    val birthDate: String?,
+    val birthDate: String?
 )

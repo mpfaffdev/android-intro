@@ -3,14 +3,22 @@ package com.example.androidintro.view.compose
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -55,10 +63,15 @@ fun ComposeScreen(viewModel: ComposeViewModel) {
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(vertical = 16.dp, horizontal = 24.dp)
                 ) {
-                    items(state.info) { item ->
+                    items(
+                        items = state.info,
+                        key = { it.uuid }
+                    ) { item ->
                         ComposerItem(
                             name = item.name,
-                            birthDate = item.birthDate
+                            birthDate = item.birthDate,
+                            favorite = item.favorite,
+                            onFavoriteClick = { viewModel.toggleFavorite(item) }
                         )
                     }
                 }
@@ -75,21 +88,39 @@ fun ComposeScreen(viewModel: ComposeViewModel) {
 fun ComposerItem(
     modifier: Modifier = Modifier,
     name: String,
-    birthDate: String?
+    birthDate: String?,
+    favorite: Boolean,
+    onFavoriteClick: () -> Unit
 ) {
-    Column(
+    val icon = if (favorite) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder
+    Row(
         modifier = modifier
     ) {
-        Text(
-            text = name,
-            fontSize = 18.sp
-        )
-        birthDate?.let {
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
             Text(
-                text = it,
-                color = Color.Blue,
-                fontSize = 12.sp
+                text = name,
+                fontSize = 18.sp,
             )
+            birthDate?.let {
+                Text(
+                    text = it,
+                    color = Color.Blue,
+                    fontSize = 12.sp
+                )
+            }
         }
+        Spacer(modifier = Modifier.width(16.dp))
+        IconButton(
+            content = {
+                Icon(
+                    modifier = Modifier.size(24.dp),
+                    imageVector = icon,
+                    contentDescription = null
+                )
+            },
+            onClick = onFavoriteClick
+        )
     }
 }
